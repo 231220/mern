@@ -38,5 +38,3 @@ const AdminEditProductPage = () => {
 };
 
 export default AdminEditProductPage;
-
-

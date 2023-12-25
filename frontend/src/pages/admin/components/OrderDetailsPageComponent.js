@@ -150,5 +150,3 @@ const OrderDetailsPageComponent = ({ getOrder, markAsDelivered }) => {
 };
 
 export default OrderDetailsPageComponent;
-
-

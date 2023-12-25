@@ -388,18 +388,3 @@ const EditProductPageComponent = ({
 };
 
 export default EditProductPageComponent;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -76,6 +76,3 @@ const OrdersPageComponent = ({ getOrders }) => {
 };
 
 export default OrdersPageComponent;
-
-
-

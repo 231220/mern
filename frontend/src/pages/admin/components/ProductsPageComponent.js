@@ -90,7 +90,3 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
 };
 
 export default ProductsPageComponent;
-
-
-
-

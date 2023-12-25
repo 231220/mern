@@ -35,7 +35,7 @@ const ProductListPageComponent = ({ getProducts, categories }) => {
   useEffect(() => {
     if (categoryName) {
       let categoryAllData = categories.find(
-        (item) => item.name === categoryName.replace(/,/g, "/")
+        (item) => item.name === categoryName.replaceAll(",", "/")
       );
       if (categoryAllData) {
         let mainCategory = categoryAllData.name.split("/")[0];
@@ -173,12 +173,3 @@ const ProductListPageComponent = ({ getProducts, categories }) => {
 };
 
 export default ProductListPageComponent;
-
-
-
-
-
-
-
-
-

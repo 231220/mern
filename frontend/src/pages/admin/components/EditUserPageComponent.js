@@ -102,7 +102,3 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
 };
 
 export default EditUserPageComponent;
-
-
-
-

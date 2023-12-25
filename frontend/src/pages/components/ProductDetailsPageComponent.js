@@ -12,7 +12,8 @@ import { Rating } from "react-simple-star-rating";
 import AddedToCartMessageComponent from "../../components/AddedToCartMessageComponent";
 
 import ImageZoom from "js-image-zoom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import MetaComponent from "../../components/MetaComponent";
 
 import { useParams } from "react-router-dom";
 
@@ -20,7 +21,8 @@ const ProductDetailsPageComponent = ({
   addToCartReduxAction,
   reduxDispatch,
   getProductDetails,
-  userInfo
+  userInfo,
+  writeReviewApiRequest
 }) => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
@@ -30,10 +32,20 @@ const ProductDetailsPageComponent = ({
   const [error, setError] = useState(false);
   const [productReviewed, setProductReviewed] = useState(false);
 
+  const messagesEndRef = useRef(null);
+
   const addToCartHandler = () => {
     reduxDispatch(addToCartReduxAction(id, quantity));
     setShowCartMessage(true);
   };
+
+  useEffect(() => {
+    if (productReviewed) {
+        setTimeout(() => {
+             messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }, 200)
+    }  
+  }, [productReviewed])
 
   useEffect(() => {
     if (product.images) {
@@ -64,7 +76,7 @@ const ProductDetailsPageComponent = ({
           er.response.data.message ? er.response.data.message : er.response.data
         )
       );
-  }, []);
+  }, [id, productReviewed]);
 
   const sendReviewHandler = (e) => {
      e.preventDefault();
@@ -74,12 +86,20 @@ const ProductDetailsPageComponent = ({
          rating: form.rating.value,
      }
      if (e.currentTarget.checkValidity() === true) {
-         console.log(product._id, formInputs);
+         writeReviewApiRequest(product._id, formInputs)
+         .then(data => {
+             if (data === "review created") {
+                 setProductReviewed("You successfuly reviewed the page!");
+             }
+         })
+         .catch((er) => setProductReviewed(er.response.data.message ? er.response.data.message : er.response.data));
      }
   }
 
   return (
-    <Container>
+      <>
+      <MetaComponent title={product.name} description={product.description}/>
+      <Container>
       <AddedToCartMessageComponent
         showCartMessage={showCartMessage}
         setShowCartMessage={setShowCartMessage}
@@ -173,6 +193,7 @@ const ProductDetailsPageComponent = ({
                           {review.comment}
                         </ListGroup.Item>
                       ))}
+                      <div ref={messagesEndRef} />
                   </ListGroup>
                 </Col>
               </Row>
@@ -197,7 +218,7 @@ const ProductDetailsPageComponent = ({
                 </Form.Select>
                 <Button disabled={!userInfo.name} type="submit" className="mb-3 mt-3" variant="primary">
                   Submit
-                </Button>
+                </Button>{" "}
                 {productReviewed}
               </Form>
             </Col>
@@ -205,11 +226,9 @@ const ProductDetailsPageComponent = ({
         )}
       </Row>
     </Container>
+      </>
+    
   );
 };
 
 export default ProductDetailsPageComponent;
-
-
-
-

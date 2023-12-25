@@ -154,8 +154,3 @@ const UserCartDetailsPageComponent = ({cartItems, itemsCount, cartSubtotal, user
 };
 
 export default UserCartDetailsPageComponent;
-
-
-
-
-

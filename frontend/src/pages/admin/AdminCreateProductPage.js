@@ -32,5 +32,3 @@ const AdminCreateProductPage = () => {
 };
 
 export default AdminCreateProductPage;
-
-

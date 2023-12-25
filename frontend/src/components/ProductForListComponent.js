@@ -36,4 +36,3 @@ const ProductForListComponent = ({ productId, name, description, price, images, 
 };
 
 export default ProductForListComponent;
-
